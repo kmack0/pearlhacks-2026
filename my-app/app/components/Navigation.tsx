@@ -1,26 +1,26 @@
 import Link from "next/link";
-import "./Navigation.css";
+import styles from "./Navigation.module.css";
 
 export default function Navigation() {
   return (
-    <nav className="navbar">
-      <div className="nav-container">
-        <Link href="/" className="nav-logo">
+    <nav className={styles.navbar}>
+      <div className={styles["nav-container"]}>
+        <Link href="/" className={styles["nav-logo"]}>
           My Website
         </Link>
-        <ul className="nav-menu">
-          <li className="nav-item">
-            <Link href="/" className="nav-link">
+        <ul className={styles["nav-menu"]}>
+          <li className={styles["nav-item"]}>
+            <Link href="/" className={styles["nav-link"]}>
               Home
             </Link>
           </li>
-          <li className="nav-item">
-            <Link href="/Savings" className="nav-link">
+          <li className={styles["nav-item"]}>
+            <Link href="/Savings" className={styles["nav-link"]}>
               Page 1
             </Link>
           </li>
-          <li className="nav-item">
-            <Link href="/Lessons" className="nav-link">
+          <li className={styles["nav-item"]}>
+            <Link href="/Lessons" className={styles["nav-link"]}>
               Page 2
             </Link>
           </li>
