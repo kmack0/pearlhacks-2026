@@ -1,4 +1,4 @@
-export default function Page2() {
+export default function Lessons() {
   return (
     <main className="page-container">
       <h1>Lessons</h1>
