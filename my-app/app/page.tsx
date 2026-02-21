@@ -1,10 +1,20 @@
 import Link from "next/link";
+import { SavingsSummary } from "./components/SavingsSummary";
 
-export default function Home() {
+export default async function Home() {
+  let total = 0;
+  try {
+    const res = await fetch("http://localhost:3000/api/total", { cache: "no-store" });
+    const data = await res.json();
+    total = data.total || 0;
+  } catch (err) {
+    console.error("Failed to fetch total", err);
+  }
+
   return (
     <main className="page-container">
       <h1>Welcome to My Website</h1>
-      <p>This is the home page of your new website.</p>
+      <p>Total Savings: ${total.toFixed(2)}</p>
       
       <section className="pages-grid">
         <div className="page-card">
