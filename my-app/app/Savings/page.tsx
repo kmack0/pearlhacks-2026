@@ -44,6 +44,9 @@ export default function Savings() {
     }
   };
 
+  // Calculate totals
+  const totalSavings = transactions.reduce((sum, tx) => sum + tx.amount, 0);
+
   return (
     <main className="page-container">
       <h1>Savings</h1>
@@ -53,6 +56,14 @@ export default function Savings() {
         <p>Loading...</p>
       ) : (
         <div>
+          {/* Total Savings Summary */}
+          <div style={{ marginBottom: "30px", padding: "20px", backgroundColor: "#f5f5f5", borderRadius: "8px" }}>
+            <h2>Total Savings: <span style={{ color: totalSavings >= 0 ? "#2ecc71" : "#e74c3c", fontSize: "1.5em" }}>
+              ${totalSavings.toFixed(2)}
+            </span></h2>
+            
+          </div>
+
           <div style={{ marginBottom: "20px" }}>
             <h2>Your Transactions ({transactions.length})</h2>
             <button onClick={clearData} style={{ padding: "8px 16px", marginBottom: "10px" }}>
@@ -71,7 +82,12 @@ export default function Savings() {
                 {transactions.map((tx, i) => (
                   <tr key={i} style={{ borderBottom: "1px solid #eee" }}>
                     <td style={{ padding: "8px" }}>{tx.date}</td>
-                    <td style={{ padding: "8px" }}>${tx.amount.toFixed(2)}</td>
+                    <td style={{ 
+                      padding: "8px",
+                      color: tx.amount > 0 ? "#2ecc71" : tx.amount < 0 ? "#e74c3c" : "#333"
+                    }}>
+                      {tx.amount > 0 ? "+" : ""}{tx.amount.toFixed(2)} {tx.amount > 0 ? "(deposit)" : tx.amount < 0 ? "(withdrawal)" : ""}
+                    </td>
                   </tr>
                 ))}
               </tbody>
