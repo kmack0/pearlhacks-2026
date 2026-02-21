@@ -1,5 +1,7 @@
 // app/api/upload/route.ts
 import { NextResponse } from "next/server";
+import fs from "fs";
+import path from "path";
 
 type Tx = {
   date: string;
@@ -7,7 +9,7 @@ type Tx = {
 };
 
 /**
- * API route to receive uploaded transactions, validate and normalize them, and respond with a summary.
+ * API route to receive uploaded data, validate and normalize them, save to file, and respond with a summary.
  */
 export async function POST(req: Request) {
   try {
@@ -30,7 +32,11 @@ export async function POST(req: Request) {
       })
       .filter(Boolean);
 
-   const count = cleaned.length;
+    const count = cleaned.length;
+
+    // Save to JSON file
+    const filePath = path.join(process.cwd(), "public/data/demoSavings.json");
+    fs.writeFileSync(filePath, JSON.stringify(cleaned, null, 2));
 
     return NextResponse.json({ ok: true, count, transactions: cleaned }, { status: 200 });
   } catch (err) {
