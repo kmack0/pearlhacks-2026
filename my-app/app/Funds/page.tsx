@@ -1,5 +1,10 @@
 
 
+'use client';
+
+import { useState } from 'react';
+import FundCard from '@/app/components/FundCard';
+
 type Fund = {
   id: string;              // unique identifier
   name: string;            // fund name
@@ -9,14 +14,14 @@ type Fund = {
 }
 
 export default function Funds() {
+  const [funds, setFunds] = useState<Fund[]>([]);
+
   return (
     <main className="page-container">
       <h1>Funds</h1>
-      <p>This is the second page of the website.</p>
-      <section>
-        <h2>Another Content Section</h2>
-        <p>Each page can have its own unique content and styling. Feel free to customize this page as needed.</p>
-      </section>
+      {funds.map((fund: Fund) => (
+        <FundCard key={fund.id} fund={fund} />
+      ))}
     </main>
   );
 }

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { SavingsSummary } from "./components/SavingsSummary";
 
 export default async function Home() {
   let total = 0;
