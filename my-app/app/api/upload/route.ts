@@ -3,12 +3,12 @@ import { NextResponse } from "next/server";
 
 type Tx = {
   date: string;
-  merchant: string;
   amount: number;
-  category?: string;
-  recurring?: boolean;
 };
 
+/**
+ * API route to receive uploaded transactions, validate and normalize them, and respond with a summary.
+ */
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -23,13 +23,10 @@ export async function POST(req: Request) {
       .map((t, i) => {
         if (!t) return null;
         const date = t.date ? String(t.date) : "";
-        const merchant = t.merchant ? String(t.merchant) : "Unknown";
         const amount = typeof t.amount === "number" ? t.amount : Number(t.amount || 0);
-        const category = t.category ? String(t.category) : "uncategorized";
-        const recurring = !!t.recurring;
         // drop clearly invalid rows
         if (!date || Number.isNaN(amount)) return null;
-        return { date, merchant, amount, category, recurring };
+        return { date,  amount };
       })
       .filter(Boolean);
 

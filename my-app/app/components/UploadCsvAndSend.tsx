@@ -1,6 +1,9 @@
 import React from "react";
 import Papa from "papaparse";
 
+/**
+ * Component to upload a CSV file, parse it, and send the transactions to the server.
+ */
 export default function UploadCsvAndSend() {
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -13,10 +16,7 @@ export default function UploadCsvAndSend() {
         // normalize and cast fields
         const parsed = (results.data as any[]).map((r) => ({
           date: r.date,
-          merchant: r.merchant,
           amount: Number(r.amount) || 0,
-          category: r.category || "uncategorized",
-          recurring: String(r.recurring || "").toLowerCase() === "true",
         }));
 
         try {
