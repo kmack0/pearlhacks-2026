@@ -11,10 +11,11 @@ interface FundCardProps {
   fund: Fund;
 }
 
-
+// Component to display individual fund details and progress
 export default function FundCard({ fund }: FundCardProps) {
   const progress = (fund.currentAmount / fund.goalAmount) * 100;
 
+  // Render the fund card with name, amounts, and a progress bar
   return (
     <div className="border rounded-lg p-4 shadow-sm">
       <h3 className="font-semibold text-lg mb-2">{fund.name}</h3>
@@ -23,7 +24,7 @@ export default function FundCard({ fund }: FundCardProps) {
         <p>${fund.currentAmount} / ${fund.goalAmount}</p>
       </div>
 
-      {/* Progress bar */}
+        {}
       <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
         <div
           className="bg-blue-500 h-2 rounded-full"

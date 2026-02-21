@@ -72,7 +72,6 @@ export default function UploadCsvAndSend({ onUploadSuccess }: UploadCsvAndSendPr
         Upload CSV (columns: date, amount)
       </label>
       <input type="file" accept=".csv,.txt" onChange={handleFile} />
-      <p className="text-xs text-gray-500 mt-1">Tip: Use sample CSV if you need consistent demo data.</p>
     </div>
   );
 }
