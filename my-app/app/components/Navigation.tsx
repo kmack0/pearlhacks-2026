@@ -16,12 +16,12 @@ export default function Navigation() {
           </li>
           <li className={styles["nav-item"]}>
             <Link href="/Savings" className={styles["nav-link"]}>
-              Page 1
+              Savings
             </Link>
           </li>
           <li className={styles["nav-item"]}>
             <Link href="/Lessons" className={styles["nav-link"]}>
-              Page 2
+              Lessons
             </Link>
           </li>
         </ul>
