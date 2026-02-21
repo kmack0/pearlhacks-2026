@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { SavingsSummary } from "./components/SavingsSummary";
 
 export default async function Home() {
   let total = 0;
+  // Fetch the total savings from the API route
   try {
     const res = await fetch("http://localhost:3000/api/total", { cache: "no-store" });
     const data = await res.json();
@@ -10,7 +10,7 @@ export default async function Home() {
   } catch (err) {
     console.error("Failed to fetch total", err);
   }
-
+  // Render the page with the total savings and links to other pages
   return (
     <main className="page-container">
       <h1>Welcome to My Website</h1>
@@ -26,10 +26,10 @@ export default async function Home() {
         </div>
         
         <div className="page-card">
-          <h2>Lessons</h2>
+          <h2>Funds</h2>
           <p>Check out the second page with different content.</p>
-          <Link href="/Lessons" className="btn">
-            Go to Lessons
+          <Link href="/Funds" className="btn">
+            Go to Funds
           </Link>
         </div>
       </section>

@@ -27,8 +27,8 @@ export default function Navigation() {
             </Link>
           </li>
           <li className={styles["nav-item"]}>
-            <Link href="/Lessons" className={styles["nav-link"]}>
-              Lessons
+            <Link href="/Funds" className={styles["nav-link"]}>
+              Funds
             </Link>
           </li>
         </ul>
