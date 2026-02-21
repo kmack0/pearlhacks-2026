@@ -9,11 +9,8 @@ export default function Navigation() {
         <img
             src="/logo.png" // Make sure logo.png is in your /public folder
             alt="Logo"
-            style={{ height: "40px" }} // Adjust height as needed
+            style={{ height: "100px" }} // Adjust height as needed
           />
-        </Link>
-        <Link href="/" className={styles["nav-logo"]}>
-          My Website
         </Link>
         <ul className={styles["nav-menu"]}>
           <li className={styles["nav-item"]}>
