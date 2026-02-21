@@ -1,4 +1,3 @@
-// components/UploadCsvAndSend.tsx
 import React from "react";
 import Papa from "papaparse";
 
