@@ -3,12 +3,6 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
-// Note:
-// const res = await fetch("/api/data");
-// const transactions = await res.json();
-
-// API route to serve existing transaction data from a JSON file
-
 export async function GET() {
   try {
     const filePath = path.join(process.cwd(), "public/data/demoSavings.json");
@@ -16,5 +10,15 @@ export async function GET() {
     return NextResponse.json(JSON.parse(data));
   } catch (err) {
     return NextResponse.json({ error: "Failed to read data" }, { status: 500 });
+  }
+}
+
+export async function DELETE() {
+  try {
+    const filePath = path.join(process.cwd(), "public/data/demoSavings.json");
+    fs.writeFileSync(filePath, JSON.stringify([], null, 2));
+    return NextResponse.json({ ok: true, message: "Data cleared" }, { status: 200 });
+  } catch (err) {
+    return NextResponse.json({ error: "Failed to clear data" }, { status: 500 });
   }
 }

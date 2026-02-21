@@ -7,7 +7,11 @@ import Papa from "papaparse";
 type RawRow = { [k: string]: any };
 type Tx = { date: string; amount: number; };
 
-export default function UploadCsvAndSend() {
+interface UploadCsvAndSendProps {
+  onUploadSuccess?: () => void;
+}
+
+export default function UploadCsvAndSend({ onUploadSuccess }: UploadCsvAndSendProps) {
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -46,7 +50,10 @@ export default function UploadCsvAndSend() {
           const merged = Array.from(map.values());
           localStorage.setItem("fp_transactions", JSON.stringify(merged));
 
-          alert(`Server processed ${json.count ?? cleaned.length} transactions`);
+          // Refresh parent component
+          if (onUploadSuccess) {
+            onUploadSuccess();
+          }
         } catch (err) {
           console.error(err);
           alert("Upload error: " + (err as Error).message);
