@@ -26,6 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
+        style={{ backgroundColor: "#D2DCB6" }} // background color for the entire website
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Navigation />
