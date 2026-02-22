@@ -57,7 +57,7 @@ export default function FundCard({ fund, onContributionSuccess, showProgressBar 
           </div>
         </div>
 
-        {/* RIGHT SIDE: The Garden Component (Flower) */}
+        {/* RIGHT: The Garden Component (Flower) */}
         <div className="w-40 flex-shrink-0">
           <Garden 
             value={fund.currentAmount} 
