@@ -18,6 +18,9 @@ type Transaction = {
   amount: number;
 };
 
+// Page fetches transaction data from the backend, 
+// displays summary of total savings
+// lists all transactions
 export default function Savings() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
@@ -28,13 +31,16 @@ export default function Savings() {
       const data = await res.json();
       if (Array.isArray(data)) {
         setTransactions(data);
-      } else {
+      } 
+      else {
         setTransactions([]);
       }
-    } catch (err) {
+    } 
+    catch (err) {
       console.error("Failed to fetch transactions", err);
       setTransactions([]);
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   };
@@ -43,13 +49,15 @@ export default function Savings() {
     fetchData();
   }, []);
 
+  // Clear data function
   const clearData = async () => {
     try {
       // Call a clear endpoint (you'll need to create this)
       await fetch("/api/data", { method: "DELETE" });
       setTransactions([]);
       alert("Data cleared!");
-    } catch (err) {
+    } 
+    catch (err) {
       console.error("Failed to clear data", err);
       alert("Error clearing data");
     }
@@ -76,6 +84,7 @@ export default function Savings() {
   }, []);
 
 
+  // Render the page
   return (
     <main className="page-container">
       <UploadCsvAndSend onUploadSuccess={fetchData} />
@@ -153,6 +162,7 @@ export default function Savings() {
               Clear All Data
             </button>
           </div>
+
           {transactions.length > 0 ? (
             <table style={{ borderCollapse: "collapse", width: "100%" }}>
               <thead>

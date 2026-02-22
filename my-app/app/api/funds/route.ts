@@ -47,6 +47,7 @@ export async function POST(request: Request) {
       );
     }
 
+    // Validate goal amount is a positive number
     if (typeof goalAmount !== "number" || goalAmount <= 0) {
       return NextResponse.json(
         { error: "Goal amount must be a positive number" },
@@ -69,8 +70,10 @@ export async function POST(request: Request) {
     funds.push(newFund);
     fs.writeFileSync(FUNDS_FILE_PATH, JSON.stringify(funds, null, 2));
 
+    // Return the newly created fund
     return NextResponse.json(newFund, { status: 201 });
-  } catch (err) {
+  } 
+  catch (err) {
     console.error("Failed to create fund", err);
     return NextResponse.json(
       { error: "Failed to create fund" },

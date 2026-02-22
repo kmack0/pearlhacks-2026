@@ -11,7 +11,7 @@ type Fund = {
   goalAmount: number;
   currentAmount: number;
 }
-// Main page to display all funds and their progress
+// Page to display  funds and their progress
 export default function Funds() {
   // State to hold the list of funds and loading status
   const [funds, setFunds] = useState<Fund[]>([]);
@@ -19,16 +19,18 @@ export default function Funds() {
 
   const [loading, setLoading] = useState(true);
 
-  // Fetch funds from the API when the component mounts
+  // Fetch funds from the API when  component mounts
   const fetchFunds = async () => {
     setLoading(true);
     try {
       const res = await fetch("/api/funds");
       const data = await res.json();
       setFunds(Array.isArray(data) ? data : []);
-    } catch {
+    } 
+    catch {
       setFunds([]);
-    } finally {
+    } 
+    finally {
       setLoading(false);
     }
   };
@@ -42,7 +44,8 @@ export default function Funds() {
       // Calculate allocated amount from current funds
       const allocatedAmount = funds.reduce((sum, fund) => sum + fund.currentAmount, 0);
       setUnallocatedSavings(totalSavings - allocatedAmount);
-    } catch {
+    } 
+    catch {
       setUnallocatedSavings(0);
     }
   };
@@ -57,6 +60,7 @@ export default function Funds() {
     }
   }, [funds]);
 
+  // Render page w a form to create new funds and list of existing funds with progress
   return (
     <main className="page-container">
       <h1 className="mb-4">Funds</h1>

@@ -10,12 +10,14 @@ type Fund = {
   currentAmount: number;
 };
 
+// Handle contributions to a fund. 
+// Validates input, checks available unallocated savings, updates the fund's current amount, and returns updated fund and savings info.
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
     const { fundId, amount } = body;
 
-    // Validation
+    // Validate fund ID
     if (!fundId || typeof fundId !== "string") {
       return NextResponse.json(
         { error: "Fund ID is required" },
@@ -23,6 +25,7 @@ export async function PUT(request: Request) {
       );
     }
 
+    // Validate amount is a positive number
     if (typeof amount !== "number" || amount <= 0) {
       return NextResponse.json(
         { error: "Amount must be a positive number" },
@@ -78,6 +81,7 @@ export async function PUT(request: Request) {
     // Write updated funds data only
     fs.writeFileSync(fundPath, JSON.stringify(funds, null, 2));
 
+    // Return updated fund and savings info
     return NextResponse.json(
       {
         success: true,
@@ -88,7 +92,8 @@ export async function PUT(request: Request) {
       },
       { status: 200 }
     );
-  } catch (err) {
+  } 
+  catch (err) {
     console.error("Failed to contribute to fund", err);
     return NextResponse.json(
       { error: "Failed to contribute to fund" },
