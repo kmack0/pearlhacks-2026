@@ -67,11 +67,42 @@ export default function UploadCsvAndSend({ onUploadSuccess }: UploadCsvAndSendPr
   };
 
   return (
-    <div className="p-2">
-      <label className="block text-sm font-medium mb-1">
-        Upload CSV (columns: date, amount)
+    <div style={{ 
+      marginBottom: "30px", 
+      padding: "24px", 
+      backgroundColor: "#f9f9f9", 
+      borderRadius: "8px",
+      border: "2px solid #e0e0e0"
+    }}>
+      <h2 style={{ marginTop: 0, marginBottom: "16px", color: "#333" }}>
+        Import Savings Data
+      </h2>
+      <p style={{ color: "#666", marginBottom: "16px", fontSize: "14px" }}>
+        Upload a CSV file with columns: <code style={{ backgroundColor: "#f0f0f0", padding: "2px 6px" }}>date</code> and <code style={{ backgroundColor: "#f0f0f0", padding: "2px 6px" }}>amount</code>
+      </p>
+      
+      <label style={{
+        display: "inline-block",
+        padding: "12px 24px",
+        backgroundColor: "#889672",
+        color: "white",
+        borderRadius: "6px",
+        cursor: "pointer",
+        fontWeight: "500",
+        transition: "background-color 0.3s ease",
+        fontSize: "16px"
+      }}
+      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "#6C7859")}
+      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "#889672")}
+      >
+        📤 Choose CSV File
+        <input 
+          type="file" 
+          accept=".csv,.txt" 
+          onChange={handleFile}
+          style={{ display: "none" }}
+        />
       </label>
-      <input type="file" accept=".csv,.txt" onChange={handleFile} />
     </div>
   );
 }

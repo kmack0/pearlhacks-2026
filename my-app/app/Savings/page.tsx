@@ -49,7 +49,6 @@ export default function Savings() {
 
   return (
     <main className="page-container">
-      <h1>Savings</h1>
       <UploadCsvAndSend onUploadSuccess={fetchData} />
       
       {loading ? (

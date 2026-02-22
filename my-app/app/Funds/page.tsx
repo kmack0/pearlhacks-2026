@@ -59,7 +59,6 @@ export default function Funds() {
 
   return (
     <main className="page-container">
-      <h1 className="mb-4">Funds</h1>
       <FundForm onFundCreated={fetchFunds} />
       {loading ? (
         <p>Loading funds...</p>
