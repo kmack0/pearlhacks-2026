@@ -43,7 +43,7 @@ export default async function Home() {
 
     <div className="my-8">
         <h2 className="text-2xl font-bold text-[#004700] mb-4">Your Funds Garden</h2> 
-        <GardenList />
+        <GardenList showProgressBar={false} />
       </div>
 
 

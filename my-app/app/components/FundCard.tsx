@@ -10,37 +10,46 @@ type Fund = {
     currentAmount: number;      
 }
 
-
 interface FundCardProps {
   fund: Fund;
   onContributionSuccess?: () => void;
+  showProgressBar?: boolean;
 }
 
-// Component to display individual fund details and progress
-export default function FundCard({ fund, onContributionSuccess }: FundCardProps) {
+export default function FundCard({ fund, onContributionSuccess, showProgressBar = true }: FundCardProps) {
   const progress = (fund.currentAmount / fund.goalAmount) * 100;
+  console.log(`FundCard "${fund.name}" - showProgressBar:`, showProgressBar);
 
   return (
-    <div className="border rounded-lg p-4 shadow-sm">
-      {/* This flex container holds the text and the flower side-by-side */}
+    <div className="border rounded-lg p-4 shadow-sm bg-white">
+      {/* Main container for the card content */}
       <div className="flex gap-4 items-start">
         
-        {/* LEFT SIDE: Text and Progress Bar */}
+        {/* LEFT SIDE: Text and Conditional Progress */}
         <div className="flex-1">
-          <h3 className="font-semibold text-lg mb-2">{fund.name}</h3>
-          <div className="mb-2 text-sm text-gray-600">
-            <p>${fund.currentAmount} / ${fund.goalAmount}</p>
+          <h3 className="font-semibold text-lg mb-1 text-[#303234]">{fund.name}</h3>
+          
+          <div className="mb-2 text-sm text-gray-500 font-medium">
+            <p>${fund.currentAmount.toLocaleString()} / ${fund.goalAmount.toLocaleString()}</p>
           </div>
 
-          <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
-            <div
-              className="bg-blue-500 h-2 rounded-full"
-              style={{ width: `${Math.min(progress, 100)}%` }}
-            />
-          </div>
+          {/* FIX: We wrap EVERYTHING related to the bar and percentage 
+             inside this one check. If showProgressBar is false, 
+             the space between the text and the button is empty.
+          */}
+          {showProgressBar && (
+            <div className="mt-3 mb-4">
+              <div className="w-full bg-gray-100 rounded-full h-2 mb-2">
+                <div
+                  className="bg-blue-500 h-2 rounded-full transition-all duration-700 ease-in-out"
+                  style={{ width: `${Math.min(progress, 100)}%` }}
+                />
+              </div>
+              <p className="text-xs text-gray-400 font-semibold">{Math.round(progress)}% to goal</p>
+            </div>
+          )}
 
-          <div className="flex justify-between items-center">
-            <p className="text-xs text-gray-500">{Math.round(progress)}%</p>
+          <div className="mt-4 flex justify-start">
             <ContributeButton 
               fund={fund} 
               onContributionSuccess={onContributionSuccess || (() => {})} 
@@ -48,18 +57,14 @@ export default function FundCard({ fund, onContributionSuccess }: FundCardProps)
           </div>
         </div>
 
-        {/* RIGHT SIDE: The Garden Component (The Flower) */}
+        {/* RIGHT SIDE: The Garden Component (Flower) */}
         <div className="w-40 flex-shrink-0">
-          {/* This is the "Loop Placement". 
-              Because FundCard is inside a .map() loop in GardenList,
-              putting <Garden /> here creates a flower for EVERY fund.
-          */}
           <Garden 
             fundId={fund.id} 
             value={fund.currentAmount} 
             goal={fund.goalAmount} 
             imageWidth={120} 
-            title={fund.name} // This sends "fund 1", "fund 2", etc.
+            title={fund.name} 
           />
         </div>
 

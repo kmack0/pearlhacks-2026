@@ -89,7 +89,7 @@ export default function Funds() {
       ) : (
         <div className="grid gap-4 mt-8">
           {funds.map(fund => (
-            <FundCard key={fund.id} fund={fund} onContributionSuccess={fetchFunds} />
+            <FundCard key={fund.id} fund={fund} onContributionSuccess={fetchFunds} showProgressBar={true} />
           ))}
         </div>
         )}
