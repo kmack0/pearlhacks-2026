@@ -50,7 +50,7 @@ export default async function Home() {
       <section className="pages-grid">
         <div className="page-card">
           <h2>Savings</h2>
-          <p>Explore the first page of our website.</p>
+          <p>Take a look at your current savings!</p>
           <Link href="/Savings" className="btn">
             Go to Savings
           </Link>
