@@ -8,7 +8,6 @@ type Fund = {
   name: string;
   goalAmount: number;
   currentAmount: number;
-  createdDate: string;
 };
 
 export async function PUT(request: Request) {

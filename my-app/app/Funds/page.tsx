@@ -10,7 +10,6 @@ type Fund = {
   name: string;
   goalAmount: number;
   currentAmount: number;
-  createdDate: string;
 }
 // Main page to display all funds and their progress
 export default function Funds() {

@@ -7,7 +7,6 @@ type Fund = {
   name: string;
   goalAmount: number;
   currentAmount: number;
-  createdDate: string;
 };
 
 interface ContributeButtonProps {
