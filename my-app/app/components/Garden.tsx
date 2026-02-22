@@ -8,6 +8,7 @@ type GardenProps = {
   goal?: number;
   imageWidth?: number;
   fundId?: string;
+  title?: string;
 };
 
 export default function Garden({
@@ -16,6 +17,7 @@ export default function Garden({
   goal,
   imageWidth = 220,
   fundId,
+  title = "Your Garden",
 }: GardenProps) {
   let percent = 0;
 
@@ -46,7 +48,7 @@ export default function Garden({
 
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <h2 className="text-xl font-semibold">🌱 Your Garden</h2>
+      <h2 className="text-xl font-semibold">🌱 {title}</h2>
       <div className="mt-4 flex items-center gap-4">
         <img
           src={imageSrc}
@@ -64,12 +66,6 @@ export default function Garden({
             }
           }}
         />
-        <div>
-          <p className="text-slate-700 font-medium">Stage {stageNumber} of {stages}</p>
-          <p className="text-slate-600 text-sm mt-1">
-            Progress: {percent.toFixed(0)}%
-          </p>
-        </div>
       </div>
     </div>
   );
