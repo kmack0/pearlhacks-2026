@@ -13,9 +13,10 @@ interface Fund {
   [key: string]: any;
 }
 
-export default function GardenList() {
+export default function GardenList({ showProgressBar = true }: { showProgressBar?: boolean }) {
   const [funds, setFunds] = useState<Fund[]>([]);
   const [loading, setLoading] = useState(true);
+  console.log("GardenList received showProgressBar:", showProgressBar);
 
   const fetchFunds = async () => {
     // Replace this with your actual API call or database hook
@@ -39,8 +40,9 @@ export default function GardenList() {
           key={fund.id} 
           fund={fund} 
           onContributionSuccess={fetchFunds} 
+          showProgressBar={showProgressBar}
         />
       ))}
-  </div>
-);
+    </div>
+  );
 }
