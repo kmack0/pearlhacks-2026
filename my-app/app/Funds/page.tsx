@@ -68,13 +68,13 @@ export default function Funds() {
 <div className="flex flex-col md:flex-row gap-12 mb-20 items-stretch">
   
   {/* Left: Create Fund Form */}
-  <div className="w-full md:w-[350px] bg-white p-6 rounded-xl border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+  <div className="w-full md:w-[350px] bg-white p-6 rounded-xl border border-black">
     <h3 className="font-bold text-lg mb-4">Create New Fund</h3>
     <FundForm onFundCreated={fetchFunds} />
   </div>
 
   {/* Right: Available Savings - Made narrower and more informative */}
-  <div className="flex-1 max-w-sm bg-white p-6 rounded-xl border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+  <div className="flex-1 max-w-sm bg-white p-6 rounded-xl border border-black">
      <p className="text-xs font-black text-gray-400 uppercase tracking-widest">Available Savings</p>
      <h2 className="text-5xl font-black my-2 text-[#303234]">
         ${unallocatedSavings.toFixed(2)}
