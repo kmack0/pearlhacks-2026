@@ -1,5 +1,5 @@
 import Link from "next/link";
-import GardenClient from "./components/GardenClient";
+import GardenList from "./components/GardenList";
 
 export default async function Home() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
@@ -42,7 +42,8 @@ export default async function Home() {
     </div>
 
     <div className="my-8">
-        <GardenClient />
+        <h2 className="text-2xl font-bold text-[#004700] mb-4">Your Fund Gardens</h2> 
+        <GardenList />
       </div>
 
 

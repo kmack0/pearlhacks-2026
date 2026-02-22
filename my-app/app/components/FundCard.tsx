@@ -22,10 +22,12 @@ export default function FundCard({ fund, onContributionSuccess }: FundCardProps)
 
   return (
     <div className="border rounded-lg p-4 shadow-sm">
+      {/* This flex container holds the text and the flower side-by-side */}
       <div className="flex gap-4 items-start">
+        
+        {/* LEFT SIDE: Text and Progress Bar */}
         <div className="flex-1">
           <h3 className="font-semibold text-lg mb-2">{fund.name}</h3>
-
           <div className="mb-2 text-sm text-gray-600">
             <p>${fund.currentAmount} / ${fund.goalAmount}</p>
           </div>
@@ -46,9 +48,20 @@ export default function FundCard({ fund, onContributionSuccess }: FundCardProps)
           </div>
         </div>
 
+        {/* RIGHT SIDE: The Garden Component (The Flower) */}
         <div className="w-40 flex-shrink-0">
-          <Garden fundId={fund.id} value={fund.currentAmount} goal={fund.goalAmount} imageWidth={120} />
+          {/* This is the "Loop Placement". 
+              Because FundCard is inside a .map() loop in GardenList,
+              putting <Garden /> here creates a flower for EVERY fund.
+          */}
+          <Garden 
+            fundId={fund.id} 
+            value={fund.currentAmount} 
+            goal={fund.goalAmount} 
+            imageWidth={120} 
+          />
         </div>
+
       </div>
     </div>
   );
