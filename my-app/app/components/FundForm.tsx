@@ -48,8 +48,7 @@ export default function FundForm({ onFundCreated }: FundFormProps) {
 
   // Render the form with input fields for fund name and goal amount, and a submit button
   return (
-    <form onSubmit={handleSubmit} className="p-4 border rounded mb-4 max-w-xs">
-      <h2 className="font-semibold mb-2">Create New Fund</h2>
+    <form onSubmit={handleSubmit} className="mb-4 max-w-xs">
       <input
         type="text"
         placeholder="Fund Name"
