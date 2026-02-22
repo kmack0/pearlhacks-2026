@@ -35,7 +35,7 @@ export default function GardenList({ showProgressBar = true }: { showProgressBar
 
   return (
     <div className={isGardenHomepageGrid ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" : "grid grid-cols-1 md:grid-cols-2 gap-6"}>
-      {/* For every fund in your database, React creates a new FundCard */}
+      {/* For every fund in the database, React creates a new FundCard */}
       {funds.map((fund) => (
         <FundCard 
           key={fund.id} 
