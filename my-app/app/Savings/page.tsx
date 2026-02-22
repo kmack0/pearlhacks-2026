@@ -1,6 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
 import UploadCsvAndSend from "../components/UploadCsvAndSend";
+import {
+  ResponsiveContainer,
+  ComposedChart,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  Area,
+} from "recharts";
 
 type Transaction = {
   date: string;
@@ -47,6 +58,24 @@ export default function Savings() {
   // Calculate totals
   const totalSavings = transactions.reduce((sum, tx) => sum + tx.amount, 0);
 
+  // sorts data by date and formats it for the chart
+ const chartData = [...transactions]
+  .filter(tx => tx.date && !isNaN(new Date(tx.date).getTime()))
+  .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+  .reduce((acc, tx) => {
+    const lastTotal = acc.length > 0 ? acc[acc.length - 1].totalToDate : 0;
+    acc.push({
+      ...tx,
+      totalToDate: lastTotal + tx.amount,
+      formattedDate: new Date(tx.date).toLocaleDateString(undefined, {
+        month: 'short',
+        day: 'numeric'
+      })
+    });
+    return acc;
+  }, []);
+
+
   return (
     <main className="page-container">
       <h1>Savings</h1>
@@ -63,6 +92,61 @@ export default function Savings() {
             </span></h2>
             
           </div>
+
+          {transactions.length > 0 && (
+            <div style={{ width: '100%', height: 350, marginBottom: '40px' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <ComposedChart data={chartData}>
+                   <defs>
+                    <linearGradient id="colorTotal" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#3498db" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#3498db" stopOpacity={0}/>
+                    </linearGradient>
+                    <linearGradient id="colorTx" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#2ecc71" stopOpacity={0.4}/>
+                      <stop offset="95%" stopColor="#2ecc71" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                  <XAxis dataKey="formattedDate" />
+                  <YAxis tickFormatter={(val) => `$${val}`} />
+                  <Tooltip formatter={(value) => `$${value.toFixed(2)}`} />
+                  
+                  {/* 2. Cumulative Savings Area (The Blue Fill) */}
+                  <Area 
+                    type="monotone" 
+                    dataKey="totalToDate" 
+                    //name="Cumulative Savings" 
+                    stroke="#3498db" 
+                    strokeWidth={3} 
+                    fillOpacity={1}
+                    fill="url(#colorTotal)" // Links to the gradient above
+                  />
+
+
+                  {/* 3. Transaction Area (The Green Overlay) */}
+                  <Area 
+                    type="monotone" 
+                    dataKey="amount" 
+                    name="Transaction" 
+                    stroke="#2ecc71" 
+                    strokeDasharray="5 5" 
+                    fillOpacity={1}
+                    fill="url(#colorTx)" // Links to the gradient above
+                  />
+
+                  {/* 3. Transaction Dots (Placed last to be on top) */}
+                  <Line 
+                    type="monotone" 
+                    dataKey="amount" 
+                    stroke="none" 
+                    dot={{ r: 4, fill: '#2ecc71' }} 
+                    activeDot={{ r: 6 }}
+                  />
+                </ComposedChart>
+              </ResponsiveContainer>
+            </div>
+          )}
 
           <div style={{ marginBottom: "20px" }}>
             <h2>Your Transactions ({transactions.length})</h2>
