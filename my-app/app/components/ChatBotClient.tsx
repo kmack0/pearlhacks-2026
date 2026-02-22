@@ -110,7 +110,7 @@ export default function ChatBotClient() {
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 w-14 h-14 bg-[#004700] text-white rounded-full shadow-lg hover:bg-[#003500] transition-all flex items-center justify-center z-40"
+        className="cursor-pointer fixed bottom-6 right-6 w-14 h-14 bg-[#004700] text-white rounded-full shadow-lg hover:bg-[#003500] transition-all flex items-center justify-center z-40"
         aria-label="Open chat"
       >
         <svg
@@ -196,7 +196,7 @@ export default function ChatBotClient() {
                   <button
                     key={idx}
                     onClick={() => sendMessage(q)}
-                    className="text-left text-xs p-2 bg-gray-100 hover:bg-gray-200 rounded transition-colors text-gray-700 truncate"
+                    className="cursor-pointer text-left text-xs p-2 bg-gray-100 hover:bg-gray-200 rounded transition-colors text-gray-700 truncate"
                   >
                     {q}
                   </button>
