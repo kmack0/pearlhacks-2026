@@ -15,6 +15,8 @@ type Fund = {
 export default function Funds() {
   // State to hold the list of funds and loading status
   const [funds, setFunds] = useState<Fund[]>([]);
+  const [unallocatedSavings, setUnallocatedSavings] = useState(0);
+
   const [loading, setLoading] = useState(true);
 
   // Fetch funds from the API when the component mounts
@@ -31,9 +33,29 @@ export default function Funds() {
     }
   };
 
+  const fetchUnallocatedSavings = async () => {
+    try {
+      const savingsRes = await fetch("/api/total");
+      const savingsData = await savingsRes.json();
+      const totalSavings = savingsData.total || 0;
+      
+      // Calculate allocated amount from current funds
+      const allocatedAmount = funds.reduce((sum, fund) => sum + fund.currentAmount, 0);
+      setUnallocatedSavings(totalSavings - allocatedAmount);
+    } catch {
+      setUnallocatedSavings(0);
+    }
+  };
+
    useEffect(() => {
     fetchFunds();
   }, []);
+
+  useEffect(() => {
+    if (funds.length > 0) {
+      fetchUnallocatedSavings();
+    }
+  }, [funds]);
 
   return (
     <main className="page-container">
