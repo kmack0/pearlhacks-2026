@@ -18,6 +18,12 @@ export default async function Home() {
   const percentage = Math.min((total / totalGoalAmount) * 100, 100);
   return (
     <main className="page-container">
+     <div className="mt-6 mb-4 mx-auto max-w-2xl text-center">
+      <h1 className="text-3xl font-bold text-[#004700]">Welcome to your financial garden! </h1>
+      <p className="text-[#303234] mt-2">
+        With WealthBloom, you can track your overall savings and watch each fund grow as you contribute. Start planting your financial future today!
+      </p>
+    </div>
 
     <div className="my-8 p-6 bg-white rounded-xl shadow-sm border">
       <div className="flex justify-between items-end mb-2">
@@ -40,8 +46,8 @@ export default async function Home() {
       </div>
     </div>
 
-    <div className="my-8">
-        <h2 className="text-2xl font-bold text-[#004700] mb-4">Your Funds Garden</h2> 
+    <div className="my-8 text-center">
+      <h2 className="text-2xl font-bold text-[#004700] mb-4">🌿 Your Funds Garden 🌿</h2>
         <GardenList showProgressBar={false} />
       </div>
 
