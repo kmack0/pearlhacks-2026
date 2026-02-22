@@ -1,12 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 type GardenProps = {
   progressPercent?: number;
   value?: number;
   goal?: number;
   imageWidth?: number;
+  fundId?: string;
 };
 
 export default function Garden({
@@ -14,6 +15,7 @@ export default function Garden({
   value,
   goal,
   imageWidth = 220,
+  fundId,
 }: GardenProps) {
   let percent = 0;
 
@@ -36,6 +38,12 @@ export default function Garden({
   const stageNumber = stageIndex + 1;
   const imageSrc = `/flower${stageNumber}.png`;
 
+  useEffect(() => {
+    // lightweight client-side instrumentation to help debug multiple mounts
+    // check browser console for lines like: "Garden mounted: <fundId?> stage: X"
+    console.log(`Garden mounted: ${fundId ?? "-"} stage: ${stageNumber} percent: ${percent.toFixed(1)}%`);
+  }, [fundId, stageNumber, percent]);
+
   return (
     <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
       <h2 className="text-xl font-semibold">🌱 Your Garden</h2>
@@ -43,6 +51,8 @@ export default function Garden({
         <img
           src={imageSrc}
           alt={`Flower stage ${stageNumber}`}
+          data-stage={stageNumber}
+          data-fund-id={fundId}
           width={imageWidth}
           height={imageWidth}
           style={{ width: imageWidth, height: imageWidth, objectFit: "contain" }}

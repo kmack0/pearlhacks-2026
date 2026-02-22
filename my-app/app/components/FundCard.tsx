@@ -8,7 +8,6 @@ type Fund = {
     name: string;
     goalAmount: number;
     currentAmount: number;      
-    createdDate: string;
 }
 
 interface FundCardProps {
@@ -47,7 +46,7 @@ export default function FundCard({ fund, onContributionSuccess }: FundCardProps)
         </div>
 
         <div className="w-40 flex-shrink-0">
-          <Garden value={fund.currentAmount} goal={fund.goalAmount} imageWidth={120} />
+          <Garden fundId={fund.id} value={fund.currentAmount} goal={fund.goalAmount} imageWidth={120} />
         </div>
       </div>
     </div>

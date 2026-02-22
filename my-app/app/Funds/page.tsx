@@ -59,16 +59,37 @@ export default function Funds() {
 
   return (
     <main className="page-container">
-      <FundForm onFundCreated={fetchFunds} />
+      <h1 className="mb-4">Funds</h1>
+      {/* Parent Container - Adds padding and better spacing */}
+<div className="flex flex-col md:flex-row gap-12 mb-20 items-stretch">
+  
+  {/* Left: Create Fund Form */}
+  <div className="w-full md:w-[350px] bg-white p-6 rounded-xl border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+    <h3 className="font-bold text-lg mb-4">Create New Fund</h3>
+    <FundForm onFundCreated={fetchFunds} />
+  </div>
+
+  {/* Right: Available Savings - Made narrower and more informative */}
+  <div className="flex-1 max-w-sm bg-white p-6 rounded-xl border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+     <p className="text-xs font-black text-gray-400 uppercase tracking-widest">Available Savings</p>
+     <h2 className="text-5xl font-black my-2 text-[#303234]">
+        ${unallocatedSavings.toFixed(2)}
+     </h2>
+     
+     {/* Add a descriptive label */}
+     <p className="text-sm text-gray-500 mb-4">Money ready to be assigned to your goals.</p>
+  </div>
+
+</div>
       {loading ? (
         <p>Loading funds...</p>
       ) : (
-        <div className="grid gap-4">
+        <div className="grid gap-4 mt-8">
           {funds.map(fund => (
             <FundCard key={fund.id} fund={fund} onContributionSuccess={fetchFunds} />
           ))}
         </div>
-      )}
+        )}
     </main>
   );
 }
