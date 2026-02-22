@@ -93,20 +93,40 @@ Style rules:
 - Use 3-6 emojis total per response, placed in headings or bullet starts.
 - Keep emojis relevant and avoid overusing them so readability stays high.`;
 
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return NextResponse.json(
+        { error: "Invalid request: messages must be a non-empty array" },
+        { status: 400 }
+      );
+    }
+
     // Note: older models like gemini-pro do not support systemInstruction, but newer ones do.
     // We'll use the systemInstruction feature but keep the history format simple.
-    let history = messages.slice(0, -1).map((msg: any) => ({
-      role: msg.role === "user" ? "user" : "model",
-      parts: [{ text: msg.content }],
-    }));
+    let history = messages
+      .slice(0, -1)
+      .filter((msg: any) => typeof msg?.content === "string")
+      .map((msg: any) => ({
+        role: msg.role === "user" ? "user" : "model",
+        parts: [{ text: msg.content }],
+      }));
+
+    // Gemini history should start with a user turn.
+    while (history.length > 0 && history[0].role !== "user") {
+      history.shift();
+    }
 
     // Ensure history starts with a user message (Gemini requirement)
     if (history.length > 0 && history[0].role === "model") {
       history = history.slice(1);
     }
 
-    const lastMessage = messages[messages.length - 1];
-    const userMessage = lastMessage.content;
+    const userMessage = messages[messages.length - 1]?.content;
+    if (typeof userMessage !== "string" || userMessage.trim().length === 0) {
+      return NextResponse.json(
+        { error: "Invalid request: latest message content is required" },
+        { status: 400 }
+      );
+    }
 
     const configuredModel = process.env.GEMINI_MODEL;
     const modelCandidates = [
@@ -220,24 +240,8 @@ Style rules:
   } catch (error: any) {
     console.error("Chat API error:", error);
 
-    const errorMessage = `${error?.message || ""}`.toLowerCase();
-    const status = error?.response?.status;
-
-    if (
-      errorMessage.includes("reported as leaked") ||
-      errorMessage.includes("api key was reported as leaked")
-    ) {
-      return NextResponse.json(
-        {
-          error:
-            "Your Gemini API key has been disabled because it was reported as leaked. Create a new key in Google AI Studio, update GEMINI_API_KEY in .env.local, and restart the dev server.",
-        },
-        { status: 403 }
-      );
-    }
-
     // Check for rate limit error
-    if (status === 429 || error.message?.includes("429")) {
+    if (error?.status === 429 || error.message?.includes("429")) {
       return NextResponse.json(
         {
           error:
