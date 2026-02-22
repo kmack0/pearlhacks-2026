@@ -26,7 +26,7 @@ export default async function Home() {
           <p className="text-sm text-[#303234] uppercase tracking-wider">Current Savings</p>
           <h2 className="text-4xl font-bold text-[#004700]">${total.toFixed(2)} / ${totalGoalAmount.toFixed(2)}</h2>
         </div>
-        <p className="text-sm font-medium text-gray-400">{percentage.toFixed(0)}% to Goal</p>
+        <p className="text-xl font-medium text-gray-600">{percentage.toFixed(0)}% to Goal</p>
       </div>
 
       {/* Progress Bar */}
