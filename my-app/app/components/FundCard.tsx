@@ -61,7 +61,6 @@ export default function FundCard({ fund, onContributionSuccess, showProgressBar 
         {/* RIGHT SIDE: The Garden Component (Flower) */}
         <div className={isGardenHomepageCard ? "w-full flex justify-center" : "w-40 flex-shrink-0"}>
           <Garden 
-            fundId={fund.id} 
             value={fund.currentAmount} 
             goal={fund.goalAmount} 
             imageWidth={isGardenHomepageCard ? 180 : 120}
