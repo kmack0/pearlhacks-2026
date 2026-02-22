@@ -79,7 +79,7 @@ export default function Funds() {
             ${unallocatedSavings.toFixed(2)}
         </h2>
         
-        {/* Add a descriptive label */}
+        {/* Unallocated savings label */}
         <p className="text-sm text-gray-500 mb-4">Money ready to be assigned to your goals.</p>
       </div>
 
