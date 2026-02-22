@@ -1,15 +1,16 @@
 import Link from "next/link";
 import styles from "./Navigation.module.css";
 
+// Renders nav bar with links to Home, Savings, and Funds pages
 export default function Navigation() {
   return (
     <nav className={styles.navbar}>
       <div className={styles["nav-container"]}>
         <Link href="/" className={styles["nav-logo"]}>
         <img
-            src="/logo.png" // Make sure logo.png is in your /public folder
+            src="/logo.png"
             alt="Logo"
-            style={{ height: "100px" }} // Adjust height as needed
+            style={{ height: "100px" }}
           />
         </Link>
         <ul className={styles["nav-menu"]}>

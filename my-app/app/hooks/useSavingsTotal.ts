@@ -6,6 +6,8 @@ export function useSavingsTotal() {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
 
+  // Fetch total savings from transaction data on component mount
+  // Sums up the amounts from all transactions to calculate the total savings
   useEffect(() => {
     const fetchTotal = async () => {
       try {
@@ -15,9 +17,11 @@ export function useSavingsTotal() {
           const sum = transactions.reduce((acc, tx) => acc + tx.amount, 0);
           setTotal(sum);
         }
-      } catch (err) {
+      } 
+      catch (err) {
         console.error("Failed to fetch total", err);
-      } finally {
+      } 
+      finally {
         setLoading(false);
       }
     };

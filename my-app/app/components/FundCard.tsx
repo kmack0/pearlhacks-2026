@@ -9,6 +9,7 @@ type Fund = {
     currentAmount: number;      
 }
 
+
 interface FundCardProps {
   fund: Fund;
   onContributionSuccess?: () => void;
