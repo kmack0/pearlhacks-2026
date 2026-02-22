@@ -18,8 +18,6 @@ export default async function Home() {
   const percentage = Math.min((total / totalGoalAmount) * 100, 100);
   return (
     <main className="page-container">
-      <h1>Welcome to My Website</h1>
-      <p>Total Savings: ${total.toFixed(2)}</p>
 
     <div className="my-8 p-6 bg-white rounded-xl shadow-sm border">
       <div className="flex justify-between items-end mb-2">
