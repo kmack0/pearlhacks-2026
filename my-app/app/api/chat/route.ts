@@ -1,7 +1,6 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextRequest, NextResponse } from "next/server";
 
-<<<<<<< HEAD
 function looksIncompleteResponse(text: string): boolean {
   const trimmed = text.trim();
   if (!trimmed) return true;
@@ -45,10 +44,6 @@ async function discoverAvailableGeminiModels(apiKey: string): Promise<string[]> 
   const remaining = modelNames.filter((name: string) => !ordered.includes(name));
   return [...ordered, ...remaining];
 }
-=======
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-const MODEL_NAME = process.env.GEMINI_MODEL || "gemini-2.0-flash";
->>>>>>> eef3581b8e95e94cdaeebdd6479a89bb8868a93f
 
 export async function POST(request: NextRequest) {
   try {
@@ -80,7 +75,6 @@ Keep explanations clear and beginner-friendly. Use real-world examples. Be encou
 
 Always be accurate with financial information and encourage consulting with a financial advisor for personalized advice.
 
-<<<<<<< HEAD
 Format every response for readability:
 - Start with a short heading using markdown style like "## Budget Basics"
 - Use concise paragraphs (1-2 sentences each)
@@ -105,33 +99,6 @@ Style rules:
       role: msg.role === "user" ? "user" : "model",
       parts: [{ text: msg.content }],
     }));
-=======
-    if (!Array.isArray(messages) || messages.length === 0) {
-      return NextResponse.json(
-        { error: "Invalid request: messages must be a non-empty array" },
-        { status: 400 }
-      );
-    }
-
-    const model = genAI.getGenerativeModel({
-      model: MODEL_NAME,
-      systemInstruction: systemPrompt,
-    });
-
-    // Convert messages to Gemini format
-    const history = messages
-      .slice(0, -1)
-      .filter((msg: any) => typeof msg?.content === "string")
-      .map((msg: any) => ({
-        role: msg.role === "user" ? "user" : "model",
-        parts: [{ text: msg.content }],
-      }));
-
-    // Gemini history should start with a user turn.
-    while (history.length > 0 && history[0].role !== "user") {
-      history.shift();
-    }
->>>>>>> eef3581b8e95e94cdaeebdd6479a89bb8868a93f
 
     // Ensure history starts with a user message (Gemini requirement)
     if (history.length > 0 && history[0].role === "model") {
@@ -152,7 +119,6 @@ Style rules:
       return Boolean(value) && array.indexOf(value as string) === index;
     });
 
-<<<<<<< HEAD
     let responseText: string | null = null;
     let lastModelError: any = null;
 
@@ -249,26 +215,29 @@ Style rules:
         }`
       );
     }
-=======
-    const userMessage = messages[messages.length - 1]?.content;
-    if (typeof userMessage !== "string" || userMessage.trim().length === 0) {
-      return NextResponse.json(
-        { error: "Invalid request: latest message content is required" },
-        { status: 400 }
-      );
-    }
-
-    const result = await chat.sendMessage(userMessage);
-    const responseText = result.response.text() || "I couldn't generate a response.";
->>>>>>> eef3581b8e95e94cdaeebdd6479a89bb8868a93f
 
     return NextResponse.json({ response: responseText });
   } catch (error: any) {
     console.error("Chat API error:", error);
-<<<<<<< HEAD
+
+    const errorMessage = `${error?.message || ""}`.toLowerCase();
+    const status = error?.response?.status;
+
+    if (
+      errorMessage.includes("reported as leaked") ||
+      errorMessage.includes("api key was reported as leaked")
+    ) {
+      return NextResponse.json(
+        {
+          error:
+            "Your Gemini API key has been disabled because it was reported as leaked. Create a new key in Google AI Studio, update GEMINI_API_KEY in .env.local, and restart the dev server.",
+        },
+        { status: 403 }
+      );
+    }
 
     // Check for rate limit error
-    if (error.response?.status === 429 || error.message?.includes("429")) {
+    if (status === 429 || error.message?.includes("429")) {
       return NextResponse.json(
         {
           error:
@@ -284,12 +253,6 @@ Style rules:
           error?.message ||
           "Failed to process chat request. Verify your Gemini API key, model access, and quota.",
       },
-=======
-    const message =
-      error instanceof Error ? error.message : "Failed to process chat request";
-    return NextResponse.json(
-      { error: message },
->>>>>>> eef3581b8e95e94cdaeebdd6479a89bb8868a93f
       { status: 500 }
     );
   }
