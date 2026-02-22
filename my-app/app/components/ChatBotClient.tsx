@@ -174,7 +174,7 @@ export default function ChatBotClient() {
 
       const data = await response.json();
 
-      if (!response.ok || data.error) {
+      if (data.error) {
         throw new Error(data.error);
       }
 
@@ -200,17 +200,12 @@ export default function ChatBotClient() {
       setMessages((prev) => [...prev, ...assistantMessages]);
     } catch (error: any) {
       console.error("Error sending message:", error);
-      const errorText =
-        error instanceof Error && error.message
-          ? error.message
-          : "Unknown chat error";
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
         content:
-          errorText && errorText !== "Unknown chat error"
-            ? `Sorry, I encountered an error: ${errorText}`
-            : "Sorry, I encountered an error while contacting the chat service. Please try again.",
+          error?.message ||
+          "Sorry, I encountered an error while contacting the chat service. Please try again.",
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -234,11 +229,11 @@ export default function ChatBotClient() {
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="cursor-pointer fixed bottom-6 right-6 w-28 h-28 bg-[#004700] text-white rounded-full shadow-lg hover:bg-[#003500] transition-all flex items-center justify-center z-40"
+        className="cursor-pointer fixed bottom-6 right-6 w-14 h-14 bg-[#004700] text-white rounded-full shadow-lg hover:bg-[#003500] transition-all flex items-center justify-center z-40"
         aria-label="Open chat"
       >
         <svg
-          className="w-12 h-12"
+          className="w-6 h-6"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
