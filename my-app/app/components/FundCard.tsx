@@ -59,6 +59,7 @@ export default function FundCard({ fund, onContributionSuccess }: FundCardProps)
             value={fund.currentAmount} 
             goal={fund.goalAmount} 
             imageWidth={120} 
+            title={fund.name} // This sends "fund 1", "fund 2", etc.
           />
         </div>
 
