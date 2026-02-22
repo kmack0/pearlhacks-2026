@@ -46,7 +46,7 @@ export default async function Home() {
       </div>
     </div>
 
-    <div className="my-8 text-center">
+    <div className="my-8 p-6 bg-[#dbe2c3] rounded-xl shadow-sm text-center">
       <h2 className="text-2xl font-bold text-[#004700] mb-4">🌿 Your Funds Garden 🌿</h2>
         <GardenList showProgressBar={false} />
       </div>
