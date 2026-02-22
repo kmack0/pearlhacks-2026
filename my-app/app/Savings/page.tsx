@@ -156,35 +156,50 @@ export default function Savings() {
             </div>
           )}
 
-          <div style={{ marginBottom: "20px" }}>
-            <h2>Your Transactions ({transactions.length})</h2>
-            <button onClick={clearData} style={{ padding: "8px 16px", marginBottom: "10px" }}>
+          <div style={{ marginBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <h2 style={{ margin: 0 }}>Your Transactions ({transactions.length})</h2>
+            <button 
+              onClick={clearData} 
+              style={{ 
+                padding: "8px 16px", 
+                backgroundColor: "#e74c3c", 
+                color: "white", 
+                border: "none", 
+                borderRadius: "4px", 
+                cursor: "pointer",
+                fontWeight: "bold"
+              }}
+            >
               Clear All Data
             </button>
           </div>
 
           {transactions.length > 0 ? (
-            <table style={{ borderCollapse: "collapse", width: "100%" }}>
-              <thead>
-                <tr style={{ borderBottom: "2px solid #ccc" }}>
-                  <th style={{ padding: "8px", textAlign: "left" }}>Date</th>
-                  <th style={{ padding: "8px", textAlign: "left" }}>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {transactions.map((tx, i) => (
-                  <tr key={i} style={{ borderBottom: "1px solid #eee" }}>
-                    <td style={{ padding: "8px" }}>{tx.date}</td>
-                    <td style={{ 
-                      padding: "8px",
-                      color: tx.amount > 0 ? "#2ecc71" : tx.amount < 0 ? "#e74c3c" : "#333"
-                    }}>
-                      {tx.amount > 0 ? "+" : ""}{tx.amount.toFixed(2)} {tx.amount > 0 ? "(deposit)" : tx.amount < 0 ? "(withdrawal)" : ""}
-                    </td>
+            <div style={{ overflowX: "auto", boxShadow: "0 2px 4px rgba(0,0,0,0.1)", borderRadius: "8px" }}>
+              <table style={{ borderCollapse: "collapse", width: "100%", backgroundColor: "white" }}>
+                <thead>
+                  <tr style={{ borderBottom: "2px solid #ecf0f1", backgroundColor: "#f8f9fa" }}>
+                    <th style={{ padding: "12px 16px", textAlign: "left", color: "#7f8c8d", fontWeight: "600" }}>Date</th>
+                    <th style={{ padding: "12px 16px", textAlign: "right", color: "#7f8c8d", fontWeight: "600" }}>Amount</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {transactions.map((tx, i) => (
+                    <tr key={i} style={{ borderBottom: "1px solid #ecf0f1" }}>
+                      <td style={{ padding: "12px 16px", color: "#2c3e50" }}>{tx.date}</td>
+                      <td style={{ 
+                        padding: "12px 16px",
+                        textAlign: "right",
+                        fontWeight: "500",
+                        color: tx.amount > 0 ? "#27ae60" : tx.amount < 0 ? "#c0392b" : "#333"
+                      }}>
+                        {tx.amount > 0 ? "+" : ""}{tx.amount.toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           ) : (
             <p>No transactions yet. Upload a CSV to get started!</p>
           )}
