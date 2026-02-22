@@ -31,6 +31,8 @@ export default function FundCard({
   const [editedName, setEditedName] = useState(fund.name);
   const [isSavingName, setIsSavingName] = useState(false);
   const [renameError, setRenameError] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   useEffect(() => {
     setEditedName(fund.name);
@@ -70,6 +72,37 @@ export default function FundCard({
       setRenameError(message);
     } finally {
       setIsSavingName(false);
+    }
+  };
+
+  const deleteFund = async () => {
+    const confirmed = window.confirm(
+      `Delete "${fund.name}"? This action cannot be undone.`
+    );
+    if (!confirmed) {
+      return;
+    }
+
+    setIsDeleting(true);
+    setDeleteError(null);
+
+    try {
+      const response = await fetch("/api/funds", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: fund.id }),
+      });
+      const data = await response.json();
+      if (!response.ok || data?.error) {
+        throw new Error(data?.error || "Failed to delete fund");
+      }
+      onContributionSuccess?.();
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : "Failed to delete fund";
+      setDeleteError(message);
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -113,20 +146,30 @@ export default function FundCard({
                 </button>
               </div>
             ) : (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <h3 className="font-semibold text-lg text-[#303234]">{fund.name}</h3>
                 {showEditButton && (
                   <button
                     type="button"
                     onClick={() => setIsEditingName(true)}
-                    className="text-xs font-semibold px-2 py-1 rounded border border-gray-300 text-gray-700 hover:bg-gray-50"
+                    className="text-xs font-semibold px-2 py-1 rounded border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-60"
+                    disabled={isDeleting}
                   >
                     Edit
                   </button>
                 )}
+                <button
+                  type="button"
+                  onClick={deleteFund}
+                  className="text-xs font-semibold px-2 py-1 rounded border border-red-300 text-red-700 hover:bg-red-50 disabled:opacity-60"
+                  disabled={isDeleting || isSavingName}
+                >
+                  {isDeleting ? "Deleting..." : "Delete"}
+                </button>
               </div>
             )}
             {renameError && <p className="mt-1 text-xs text-red-600">{renameError}</p>}
+            {deleteError && <p className="mt-1 text-xs text-red-600">{deleteError}</p>}
           </div>
           
           <div

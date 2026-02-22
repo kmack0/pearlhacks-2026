@@ -119,3 +119,35 @@ export async function PUT(request: Request) {
     return NextResponse.json({ error: "Failed to update fund" }, { status: 500 });
   }
 }
+
+// DELETE: Remove an existing fund
+export async function DELETE(request: Request) {
+  try {
+    const body = await request.json();
+    const { id } = body;
+
+    if (!id || typeof id !== "string") {
+      return NextResponse.json({ error: "Fund id is required" }, { status: 400 });
+    }
+
+    ensureFundsFile();
+    const data = fs.readFileSync(FUNDS_FILE_PATH, "utf-8");
+    const funds = JSON.parse(data) as Fund[];
+
+    const fundIndex = funds.findIndex((fund) => fund.id === id);
+    if (fundIndex === -1) {
+      return NextResponse.json({ error: "Fund not found" }, { status: 404 });
+    }
+
+    const [deletedFund] = funds.splice(fundIndex, 1);
+    fs.writeFileSync(FUNDS_FILE_PATH, JSON.stringify(funds, null, 2));
+
+    return NextResponse.json(
+      { message: "Fund deleted", fund: deletedFund },
+      { status: 200 }
+    );
+  } catch (err) {
+    console.error("Failed to delete fund", err);
+    return NextResponse.json({ error: "Failed to delete fund" }, { status: 500 });
+  }
+}
