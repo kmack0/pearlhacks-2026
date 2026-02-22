@@ -120,7 +120,7 @@ export default function Savings() {
                   <YAxis tickFormatter={(val) => `$${val}`} />
                   <Tooltip formatter={(value) => `$${typeof value === 'number' ? value.toFixed(2) : parseFloat(String(value)).toFixed(2)}`} />
                   
-                  {/* 2. Cumulative Savings Area (The Blue Fill) */}
+                  {/* 2. Cumulative Savings Area*/}
                   <Area 
                     type="monotone" 
                     dataKey="totalToDate" 
@@ -128,11 +128,11 @@ export default function Savings() {
                     stroke="#3498db" 
                     strokeWidth={3} 
                     fillOpacity={1}
-                    fill="url(#colorTotal)" // Links to the gradient above
+                    fill="url(#colorTotal)"
                   />
 
 
-                  {/* 3. Transaction Area (The Green Overlay) */}
+                  {/* 3. Transaction Area  */}
                   <Area 
                     type="monotone" 
                     dataKey="amount" 
@@ -140,10 +140,10 @@ export default function Savings() {
                     stroke="#2ecc71" 
                     strokeDasharray="5 5" 
                     fillOpacity={1}
-                    fill="url(#colorTx)" // Links to the gradient above
+                    fill="url(#colorTx)" 
                   />
 
-                  {/* 3. Transaction Dots (Placed last to be on top) */}
+                  {/* 3. Transaction Dots */}
                   <Line 
                     type="monotone" 
                     dataKey="amount" 
