@@ -204,14 +204,13 @@ export default function ChatBotClient() {
         error instanceof Error && error.message
           ? error.message
           : "Unknown chat error";
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "assistant",
-<<<<<<< HEAD
-        content:
-          "Sorry, I encountered an error. Please check that your GEMINI_API_KEY is configured and try again.",
-        timestamp: new Date(),
-      };
+const errorMessage: Message = {
+  id: (Date.now() + 1).toString(),
+  role: "assistant",
+  content:
+    "Sorry, I encountered an error. Please check that your GEMINI_API_KEY is configured and try again.",
+  timestamp: new Date(),
+};
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
