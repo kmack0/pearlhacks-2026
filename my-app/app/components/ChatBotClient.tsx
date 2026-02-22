@@ -119,107 +119,6 @@ function splitAssistantResponse(content: string): string[] {
     .filter(Boolean);
 }
 
-const quickReplyChips = [
-  "Can you simplify that?",
-  "Give me a real-life example",
-  "Can you turn this into a checklist?",
-  "What's one action I should take today?",
-];
-
-function renderAssistantContent(content: string) {
-  const lines = content.split("\n");
-  const blocks: React.ReactNode[] = [];
-  let i = 0;
-
-  while (i < lines.length) {
-    const rawLine = lines[i];
-    const line = rawLine.trim();
-
-    if (!line) {
-      i += 1;
-      continue;
-    }
-
-    const headingMatch = line.match(/^(#{1,3})\s+(.+)$/);
-    if (headingMatch) {
-      const level = headingMatch[1].length;
-      const text = headingMatch[2];
-      const headingClass =
-        level === 1
-          ? "text-base font-semibold mt-2 mb-1"
-          : level === 2
-          ? "text-sm font-semibold mt-2 mb-1"
-          : "text-sm font-medium mt-2 mb-1";
-      blocks.push(
-        <p key={`h-${i}`} className={headingClass}>
-          {text}
-        </p>
-      );
-      i += 1;
-      continue;
-    }
-
-    if (/^[-*]\s+/.test(line)) {
-      const items: string[] = [];
-      while (i < lines.length && /^[-*]\s+/.test(lines[i].trim())) {
-        items.push(lines[i].trim().replace(/^[-*]\s+/, ""));
-        i += 1;
-      }
-      blocks.push(
-        <ul key={`ul-${i}`} className="list-disc pl-5 my-1 space-y-1 text-sm">
-          {items.map((item, idx) => (
-            <li key={idx}>{item}</li>
-          ))}
-        </ul>
-      );
-      continue;
-    }
-
-    if (/^\d+\.\s+/.test(line)) {
-      const items: string[] = [];
-      while (i < lines.length && /^\d+\.\s+/.test(lines[i].trim())) {
-        items.push(lines[i].trim().replace(/^\d+\.\s+/, ""));
-        i += 1;
-      }
-      blocks.push(
-        <ol key={`ol-${i}`} className="list-decimal pl-5 my-1 space-y-1 text-sm">
-          {items.map((item, idx) => (
-            <li key={idx}>{item}</li>
-          ))}
-        </ol>
-      );
-      continue;
-    }
-
-    const paragraphLines: string[] = [];
-    while (
-      i < lines.length &&
-      lines[i].trim() &&
-      !/^(#{1,3})\s+/.test(lines[i].trim()) &&
-      !/^[-*]\s+/.test(lines[i].trim()) &&
-      !/^\d+\.\s+/.test(lines[i].trim())
-    ) {
-      paragraphLines.push(lines[i].trim());
-      i += 1;
-    }
-
-    blocks.push(
-      <p key={`p-${i}`} className="text-sm leading-relaxed my-1 whitespace-pre-wrap">
-        {paragraphLines.join(" ")}
-      </p>
-    );
-  }
-
-  return <div className="space-y-1">{blocks}</div>;
-}
-
-function splitAssistantResponse(content: string): string[] {
-  return content
-    .split(/\n\s*---\s*\n/g)
-    .map((chunk) => chunk.trim())
-    .filter(Boolean);
-}
-
 export default function ChatBotClient() {
   const [messages, setMessages] = useState<Message[]>([
     {
@@ -275,7 +174,7 @@ export default function ChatBotClient() {
 
       const data = await response.json();
 
-      if (!response.ok || data.error) {
+      if (data.error) {
         throw new Error(data.error);
       }
 
@@ -297,41 +196,16 @@ export default function ChatBotClient() {
                 timestamp,
               },
             ];
-      const chunks = splitAssistantResponse(data.response);
-      const timestamp = new Date();
-      const assistantMessages: Message[] =
-        chunks.length > 0
-          ? chunks.map((chunk, idx) => ({
-              id: `${Date.now()}-${idx}`,
-              role: "assistant" as const,
-              content: chunk,
-              timestamp,
-            }))
-          : [
-              {
-                id: (Date.now() + 1).toString(),
-                role: "assistant" as const,
-                content: data.response,
-                timestamp,
-              },
-            ];
 
       setMessages((prev) => [...prev, ...assistantMessages]);
     } catch (error: any) {
-      setMessages((prev) => [...prev, ...assistantMessages]);
-    } catch (error: any) {
       console.error("Error sending message:", error);
-      const errorText =
-        error instanceof Error && error.message
-          ? error.message
-          : "Unknown chat error";
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
         content:
-          errorText && errorText !== "Unknown chat error"
-            ? `Sorry, I encountered an error: ${errorText}`
-            : "Sorry, I encountered an error while contacting the chat service. Please try again.",
+          error?.message ||
+          "Sorry, I encountered an error while contacting the chat service. Please try again.",
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -350,21 +224,16 @@ export default function ChatBotClient() {
     .find((message) => message.role === "assistant")?.id;
   const hasUserMessage = messages.some((message) => message.role === "user");
 
-  const lastAssistantMessageId = [...messages]
-    .reverse()
-    .find((message) => message.role === "assistant")?.id;
-  const hasUserMessage = messages.some((message) => message.role === "user");
-
   return (
     <>
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="cursor-pointer fixed bottom-6 right-6 w-28 h-28 bg-[#004700] text-white rounded-full shadow-lg hover:bg-[#003500] transition-all flex items-center justify-center z-40"
+        className="cursor-pointer fixed bottom-6 right-6 w-14 h-14 bg-[#004700] text-white rounded-full shadow-lg hover:bg-[#003500] transition-all flex items-center justify-center z-40"
         aria-label="Open chat"
       >
         <svg
-          className="w-12 h-12"
+          className="w-6 h-6"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -418,35 +287,12 @@ export default function ChatBotClient() {
                       {message.content}
                     </p>
                   )}
-                  {message.role === "assistant" ? (
-                    renderAssistantContent(message.content)
-                  ) : (
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                      {message.content}
-                    </p>
-                  )}
                   <span className="text-xs mt-1 block opacity-70">
                     {message.timestamp.toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
                     })}
                   </span>
-                  {message.role === "assistant" &&
-                    message.id === lastAssistantMessageId &&
-                    hasUserMessage &&
-                    !isLoading && (
-                      <div className="mt-2 flex flex-wrap gap-2">
-                        {quickReplyChips.map((chip) => (
-                          <button
-                            key={chip}
-                            onClick={() => sendMessage(chip)}
-                            className="cursor-pointer text-xs px-2.5 py-1 rounded-full bg-[#e8f3e8] text-[#004700] hover:bg-[#d9ecd9] transition-colors"
-                          >
-                            {chip}
-                          </button>
-                        ))}
-                      </div>
-                    )}
                   {message.role === "assistant" &&
                     message.id === lastAssistantMessageId &&
                     hasUserMessage &&
@@ -491,7 +337,6 @@ export default function ChatBotClient() {
                   <button
                     key={idx}
                     onClick={() => sendMessage(q)}
-                    className="cursor-pointer text-left text-xs p-2 bg-gray-100 hover:bg-gray-200 rounded transition-colors text-gray-700 truncate"
                     className="cursor-pointer text-left text-xs p-2 bg-gray-100 hover:bg-gray-200 rounded transition-colors text-gray-700 truncate"
                   >
                     {q}
