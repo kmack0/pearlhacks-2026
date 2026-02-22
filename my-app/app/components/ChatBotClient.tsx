@@ -209,11 +209,7 @@ export default function ChatBotClient() {
         role: "assistant",
 <<<<<<< HEAD
         content:
-          error?.message ||
-          "Sorry, I encountered an error while contacting the chat service. Please try again.",
-=======
-        content: `Sorry, I encountered an error: ${errorText}`,
->>>>>>> eef3581b8e95e94cdaeebdd6479a89bb8868a93f
+          "Sorry, I encountered an error. Please check that your GEMINI_API_KEY is configured and try again.",
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -237,7 +233,7 @@ export default function ChatBotClient() {
       {/* Chat Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="cursor-pointer fixed bottom-6 right-6 w-28 h-28 bg-[#004700] text-white rounded-full shadow-lg hover:bg-[#003500] transition-all flex items-center justify-center z-40"
+        className="fixed bottom-6 right-6 w-14 h-14 bg-[#004700] text-white rounded-full shadow-lg hover:bg-[#003500] transition-all flex items-center justify-center z-40"
         aria-label="Open chat"
       >
         <svg
