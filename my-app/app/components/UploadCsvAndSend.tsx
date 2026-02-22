@@ -75,8 +75,8 @@ export default function UploadCsvAndSend({ onUploadSuccess }: UploadCsvAndSendPr
       borderRadius: "8px",
       border: "2px solid #e0e0e0"
     }}>
-      <h2 style={{ marginTop: 0, marginBottom: "16px", color: "#333" }}>
-        Import Savings Data
+      <h2 style={{ marginTop: 0, marginBottom: "16px", color: "#333", fontSize: "32px", fontWeight: 800 }}>
+        🌸 Import Savings Data 🌸
       </h2>
       <p style={{ color: "#666", marginBottom: "16px", fontSize: "14px" }}>
         Upload a CSV file with columns: <code style={{ backgroundColor: "#f0f0f0", padding: "2px 6px" }}>date</code> and <code style={{ backgroundColor: "#f0f0f0", padding: "2px 6px" }}>amount</code>

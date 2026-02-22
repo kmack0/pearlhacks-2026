@@ -73,7 +73,7 @@ export default function ChatBotClient() {
 
       const data = await response.json();
 
-      if (data.error) {
+      if (!response.ok || data.error) {
         throw new Error(data.error);
       }
 
@@ -87,11 +87,14 @@ export default function ChatBotClient() {
       setMessages((prev) => [...prev, assistantMessage]);
     } catch (error) {
       console.error("Error sending message:", error);
+      const errorText =
+        error instanceof Error && error.message
+          ? error.message
+          : "Unknown chat error";
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content:
-          "Sorry, I encountered an error. Please check that your GEMINI_API_KEY is configured and try again.",
+        content: `Sorry, I encountered an error: ${errorText}`,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
