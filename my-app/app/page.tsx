@@ -26,7 +26,7 @@ export default async function Home() {
           <p className="text-sm text-[#303234] uppercase tracking-wider">Current Savings</p>
           <h2 className="text-4xl font-bold text-[#004700]">${total.toFixed(2)} / ${totalGoalAmount.toFixed(2)}</h2>
         </div>
-        <p className="text-sm font-medium text-gray-400">{percentage.toFixed(0)}% to Goal</p>
+        <p className="text-xl font-medium text-gray-600">{percentage.toFixed(0)}% to Goal</p>
       </div>
 
       {/* Progress Bar */}
@@ -50,7 +50,7 @@ export default async function Home() {
       <section className="pages-grid">
         <div className="page-card">
           <h2>Savings</h2>
-          <p>Explore the first page of our website.</p>
+          <p>Take a look at your current savings!</p>
           <Link href="/Savings" className="btn">
             Go to Savings
           </Link>
