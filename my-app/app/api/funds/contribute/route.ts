@@ -1,4 +1,3 @@
-// app/api/funds/contribute/route.ts
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
@@ -10,8 +9,11 @@ type Fund = {
   currentAmount: number;
 };
 
-// Handle contributions to a fund. 
-// Validates input, checks available unallocated savings, updates the fund's current amount, and returns updated fund and savings info.
+// PUT: Handle contributions to a fund
+// Validates input
+// check unallocated savings
+// update fund's current amount
+// returns updated fund and savings info
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
@@ -75,10 +77,10 @@ export async function PUT(request: Request) {
       );
     }
 
-    // Update fund currentAmount (allocated to this fund)
+    // Update fund's currentAmount
     funds[fundIndex].currentAmount += amount;
 
-    // Write updated funds data only
+    // Write updated funds back to file
     fs.writeFileSync(fundPath, JSON.stringify(funds, null, 2));
 
     // Return updated fund and savings info

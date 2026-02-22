@@ -1,9 +1,8 @@
-// app/api/data/route.ts
 import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
-// Handle fetching transaction data.
+// GET: Handle fetching transaction data
 export async function GET() {
   try {
     const filePath = path.join(process.cwd(), "public/data/demoSavings.json");
@@ -14,7 +13,7 @@ export async function GET() {
   }
 }
 
-// Clear transaction data by overwriting the JSON file w/ an empty array.
+// DELETE: Clear transaction data by overwriting the JSON file w/ an empty array
 export async function DELETE() {
   try {
     const filePath = path.join(process.cwd(), "public/data/demoSavings.json");
