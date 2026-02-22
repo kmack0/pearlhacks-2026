@@ -1,4 +1,3 @@
-import Link from "next/link";
 import GardenList from "./components/GardenList";
 
 export default async function Home() {
@@ -46,24 +45,6 @@ export default async function Home() {
         <GardenList showProgressBar={false} />
       </div>
 
-
-      <section className="pages-grid">
-        <div className="page-card">
-          <h2>Savings</h2>
-          <p>Take a look at your current savings!</p>
-          <Link href="/Savings" className="btn">
-            Go to Savings
-          </Link>
-        </div>
-        
-        <div className="page-card">
-          <h2>Lessons</h2>
-          <p>Check out the second page with different content.</p>
-          <Link href="/Lessons" className="btn">
-            Go to Lessons
-          </Link>
-        </div>
-      </section>
     </main>
   );
 }
