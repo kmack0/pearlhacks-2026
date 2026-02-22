@@ -77,7 +77,6 @@ export default function FundCard({
     <div className="border rounded-lg p-4 shadow-sm bg-white">
       {/* Main container for the card content */}
       <div className="flex gap-4 items-start">
-        
         {/* LEFT SIDE: Text and Conditional Progress */}
         <div className="flex-1">
           <div className="mb-1">
@@ -170,7 +169,6 @@ export default function FundCard({
             imageWidth={120} 
           />
         </div>
-
       </div>
     </div>
   );

@@ -42,7 +42,7 @@ export default function GardenList({ showProgressBar = true }: { showProgressBar
           fund={fund} 
           onContributionSuccess={fetchFunds} 
           showProgressBar={showProgressBar}
-          showEditButton={showProgressBar}
+          showEditButton={true}
           alignAmountWithTitle={!showProgressBar}
         />
       ))}
