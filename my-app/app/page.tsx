@@ -1,9 +1,14 @@
 import Link from "next/link";
 
 export default async function Home() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const response = await fetch(`${baseUrl}/api/funds`);
+  const funds = await response.json();
+  const goalAmount = funds[0].goalAmount;
+
   let total = 0;
   try {
-    const res = await fetch("http://localhost:3000/api/total", { cache: "no-store" });
+    const res = await fetch(`${baseUrl}/api/total`, { cache: "no-store" });
     const data = await res.json();
     total = data.total || 0;
   } catch (err) {
