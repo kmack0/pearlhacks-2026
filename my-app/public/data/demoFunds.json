@@ -3,14 +3,14 @@
     "id": "b73892b5-be6e-48a9-b417-69a474f9d053",
     "name": "fund 1",
     "goalAmount": 101,
-    "currentAmount": 0,
+    "currentAmount": 101,
     "createdDate": "2026-02-21T22:48:48.274Z"
   },
   {
     "id": "23193d49-fe5d-405a-ac11-a85324a21cdc",
     "name": "fund 2",
     "goalAmount": 750,
-    "currentAmount": 0,
+    "currentAmount": 600,
     "createdDate": "2026-02-22T00:46:42.636Z"
   }
 ]

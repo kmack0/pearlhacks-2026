@@ -1,4 +1,5 @@
 import Link from "next/link";
+import GardenClient from "./components/GardenClient";
 
 export default async function Home() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
@@ -39,7 +40,12 @@ export default async function Home() {
         />
       </div>
     </div>
-      
+
+    <div className="my-8">
+        <GardenClient />
+      </div>
+
+
       <section className="pages-grid">
         <div className="page-card">
           <h2>Savings</h2>

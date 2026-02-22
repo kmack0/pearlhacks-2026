@@ -62,7 +62,7 @@ export default function Savings() {
  const chartData = [...transactions]
   .filter(tx => tx.date && !isNaN(new Date(tx.date).getTime()))
   .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-  .reduce((acc, tx) => {
+  .reduce((acc: Array<Transaction & { totalToDate: number; formattedDate: string }>, tx) => {
     const lastTotal = acc.length > 0 ? acc[acc.length - 1].totalToDate : 0;
     acc.push({
       ...tx,
@@ -78,7 +78,6 @@ export default function Savings() {
 
   return (
     <main className="page-container">
-      <h1>Savings</h1>
       <UploadCsvAndSend onUploadSuccess={fetchData} />
       
       {loading ? (
@@ -110,7 +109,7 @@ export default function Savings() {
                   <CartesianGrid strokeDasharray="3 3" vertical={false} />
                   <XAxis dataKey="formattedDate" />
                   <YAxis tickFormatter={(val) => `$${val}`} />
-                  <Tooltip formatter={(value) => `$${value.toFixed(2)}`} />
+                  <Tooltip formatter={(value) => `$${typeof value === 'number' ? value.toFixed(2) : parseFloat(String(value)).toFixed(2)}`} />
                   
                   {/* 2. Cumulative Savings Area (The Blue Fill) */}
                   <Area 

@@ -9,7 +9,6 @@ type Fund = {
   name: string;
   goalAmount: number;
   currentAmount: number;
-  createdDate: string;
 };
 
 const FUNDS_FILE_PATH = path.join(process.cwd(), "public/data/demoFunds.json");
@@ -65,7 +64,6 @@ export async function POST(request: Request) {
       name: name.trim(),
       goalAmount,
       currentAmount: 0,
-      createdDate: new Date().toISOString(),
     };
 
     funds.push(newFund);
