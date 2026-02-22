@@ -133,6 +133,7 @@ export default function ChatBotClient() {
   const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const requestInFlightRef = useRef(false);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -143,13 +144,15 @@ export default function ChatBotClient() {
   }, [messages]);
 
   const sendMessage = async (text: string) => {
-    if (!text.trim()) return;
+    const trimmedText = text.trim();
+    if (!trimmedText || requestInFlightRef.current) return;
+    requestInFlightRef.current = true;
 
     // Add user message
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
-      content: text,
+      content: trimmedText,
       timestamp: new Date(),
     };
 
@@ -166,7 +169,7 @@ export default function ChatBotClient() {
             ...messages,
             {
               role: "user",
-              content: text,
+              content: trimmedText,
             },
           ],
         }),
@@ -196,7 +199,6 @@ export default function ChatBotClient() {
                 timestamp,
               },
             ];
-
       setMessages((prev) => [...prev, ...assistantMessages]);
     } catch (error: any) {
       console.error("Error sending message:", error);
@@ -210,6 +212,7 @@ export default function ChatBotClient() {
       };
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
+      requestInFlightRef.current = false;
       setIsLoading(false);
     }
   };
