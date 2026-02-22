@@ -68,7 +68,7 @@ export default function ContributeButton({
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="mt-2 px-3 py-1 bg-green-500 text-white rounded text-sm hover:bg-green-600"
+        className="mt-2 px-3 py-1 bg-[#a4c6a2] text-[#1f2a1f] border border-black rounded text-sm hover:bg-[#8eb58b]"
       >
         Contribute
       </button>
@@ -109,7 +109,7 @@ export default function ContributeButton({
               </button>
               <button
                 onClick={handleContribute}
-                className="flex-1 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 disabled:opacity-50"
+                className="flex-1 px-4 py-2 bg-[#a4c6a2] text-[#1f2a1f] border border-black rounded hover:bg-[#8eb58b] disabled:opacity-50"
                 disabled={loading} >
                 {loading ? "Contributing..." : "Contribute"}
               </button>

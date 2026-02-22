@@ -63,13 +63,12 @@ export default function Funds() {
   // Render page w a form to create new funds and list of existing funds with progress
   return (
     <main className="page-container">
-      <h1 className="mb-4">Funds</h1>
       {/* Parent Container - Adds padding and better spacing */}
 <div className="flex flex-col md:flex-row gap-12 mb-20 items-stretch">
   
   {/* Left: Create Fund Form */}
   <div className="w-full md:w-[350px] bg-white p-6 rounded-xl border border-black">
-    <h3 className="font-bold text-lg mb-4">Create New Fund</h3>
+    <h3 className="font-bold text-lg mb-4">🌸 Create New Fund 🌸</h3>
     <FundForm onFundCreated={fetchFunds} />
   </div>
 

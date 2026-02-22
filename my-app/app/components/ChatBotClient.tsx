@@ -174,7 +174,7 @@ export default function ChatBotClient() {
 
       const data = await response.json();
 
-      if (data.error) {
+      if (!response.ok || data.error) {
         throw new Error(data.error);
       }
 
@@ -200,12 +200,20 @@ export default function ChatBotClient() {
       setMessages((prev) => [...prev, ...assistantMessages]);
     } catch (error: any) {
       console.error("Error sending message:", error);
+      const errorText =
+        error instanceof Error && error.message
+          ? error.message
+          : "Unknown chat error";
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
+<<<<<<< HEAD
         content:
           error?.message ||
           "Sorry, I encountered an error while contacting the chat service. Please try again.",
+=======
+        content: `Sorry, I encountered an error: ${errorText}`,
+>>>>>>> eef3581b8e95e94cdaeebdd6479a89bb8868a93f
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, errorMessage]);
