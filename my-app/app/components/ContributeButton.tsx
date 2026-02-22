@@ -14,6 +14,9 @@ interface ContributeButtonProps {
   onContributionSuccess: () => void;
 }
 
+// Renders a "Contribute" button for a given fund
+// On click, opens a modal where users can enter an amount to contribute
+// Handles the contribution logic, updates the parent component on success
 export default function ContributeButton({
   fund,
   onContributionSuccess,
@@ -60,6 +63,7 @@ export default function ContributeButton({
     }
   };
 
+  // Render the button and modal
   return (
     <>
       <button
@@ -100,15 +104,13 @@ export default function ContributeButton({
                   setAmount("");
                 }}
                 className="flex-1 px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
-                disabled={loading}
-              >
+                disabled={loading} >
                 Cancel
               </button>
               <button
                 onClick={handleContribute}
                 className="flex-1 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 disabled:opacity-50"
-                disabled={loading}
-              >
+                disabled={loading} >
                 {loading ? "Contributing..." : "Contribute"}
               </button>
             </div>

@@ -11,6 +11,7 @@ interface UploadCsvAndSendProps {
   onUploadSuccess?: () => void;
 }
 
+// Handle CSV file upload, parse it, and send the data to the backend API
 export default function UploadCsvAndSend({ onUploadSuccess }: UploadCsvAndSendProps) {
   const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
