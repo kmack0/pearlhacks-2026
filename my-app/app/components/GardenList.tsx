@@ -16,6 +16,7 @@ interface Fund {
 export default function GardenList({ showProgressBar = true }: { showProgressBar?: boolean }) {
   const [funds, setFunds] = useState<Fund[]>([]);
   const [loading, setLoading] = useState(true);
+  const isGardenHomepageGrid = !showProgressBar;
   console.log("GardenList received showProgressBar:", showProgressBar);
 
   const fetchFunds = async () => {
@@ -33,7 +34,7 @@ export default function GardenList({ showProgressBar = true }: { showProgressBar
   if (loading) return <p>Loading your gardens...</p>;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className={isGardenHomepageGrid ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" : "grid grid-cols-1 md:grid-cols-2 gap-6"}>
       {/* For every fund in your database, React creates a new FundCard */}
       {funds.map((fund) => (
         <FundCard 
