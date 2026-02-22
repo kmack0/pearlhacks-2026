@@ -80,3 +80,42 @@ export async function POST(request: Request) {
     );
   }
 }
+
+// PUT: Rename an existing fund
+export async function PUT(request: Request) {
+  try {
+    const body = await request.json();
+    const { id, name } = body;
+
+    if (!id || typeof id !== "string") {
+      return NextResponse.json({ error: "Fund id is required" }, { status: 400 });
+    }
+
+    if (!name || typeof name !== "string" || name.trim() === "") {
+      return NextResponse.json({ error: "Fund name is required" }, { status: 400 });
+    }
+
+    const trimmedName = name.trim();
+
+    ensureFundsFile();
+    const data = fs.readFileSync(FUNDS_FILE_PATH, "utf-8");
+    const funds = JSON.parse(data) as Fund[];
+
+    const fundIndex = funds.findIndex((fund) => fund.id === id);
+    if (fundIndex === -1) {
+      return NextResponse.json({ error: "Fund not found" }, { status: 404 });
+    }
+
+    funds[fundIndex] = {
+      ...funds[fundIndex],
+      name: trimmedName,
+    };
+
+    fs.writeFileSync(FUNDS_FILE_PATH, JSON.stringify(funds, null, 2));
+
+    return NextResponse.json(funds[fundIndex], { status: 200 });
+  } catch (err) {
+    console.error("Failed to update fund", err);
+    return NextResponse.json({ error: "Failed to update fund" }, { status: 500 });
+  }
+}
