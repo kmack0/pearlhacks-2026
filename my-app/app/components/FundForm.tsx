@@ -69,7 +69,7 @@ export default function FundForm({ onFundCreated }: FundFormProps) {
       />
       <button
         type="submit"
-        className="w-full bg-blue-500 text-white p-2 rounded"
+        className="cursor-pointer w-full bg-blue-500 text-white p-2 rounded"
         disabled={loading}
       >
         {loading ? "Creating..." : "Create Fund"}
