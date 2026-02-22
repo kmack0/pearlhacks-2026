@@ -241,7 +241,11 @@ Style rules:
     console.error("Chat API error:", error);
 
     // Check for rate limit error
-    if (error?.status === 429 || error.message?.includes("429")) {
+    if (
+      error?.response?.status === 429 ||
+      error?.status === 429 ||
+      error?.message?.includes("429")
+    ) {
       return NextResponse.json(
         {
           error:

@@ -42,6 +42,8 @@ export default function GardenList({ showProgressBar = true }: { showProgressBar
           fund={fund} 
           onContributionSuccess={fetchFunds} 
           showProgressBar={showProgressBar}
+          showEditButton={true}
+          alignAmountWithTitle={!showProgressBar}
         />
       ))}
     </div>
