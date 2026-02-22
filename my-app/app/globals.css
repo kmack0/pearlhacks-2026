@@ -55,14 +55,14 @@ body {
 
 .page-card h2 {
   margin-top: 0;
-  color: #4facfe;
+  color: #889672;
 }
 
 .btn {
   display: inline-block;
   margin-top: 1rem;
   padding: 0.75rem 1.5rem;
-  background-color: #4facfe;
+  background-color: #889672;
   color: white;
   text-decoration: none;
   border-radius: 4px;
@@ -70,5 +70,5 @@ body {
 }
 
 .btn:hover {
-  background-color: #2a7fd8;
+  background-color: #6C7859;
 }

@@ -9,7 +9,7 @@ export default async function Home() {
   } catch (err) {
     console.error("Failed to fetch total", err);
   }
-  const savingsGoal = 10000; // Example goal amount
+  const savingsGoal = 1000; // Example goal amount
   const percentage = Math.min((total / savingsGoal) * 100, 100);
   return (
     <main className="page-container">
@@ -19,8 +19,8 @@ export default async function Home() {
     <div className="my-8 p-6 bg-white rounded-xl shadow-sm border">
       <div className="flex justify-between items-end mb-2">
         <div>
-          <p className="text-sm text-gray-500 uppercase tracking-wider">Current Savings</p>
-          <h2 className="text-4xl font-bold text-green-600">${total.toFixed(2)}</h2>
+          <p className="text-sm text-[#303234] uppercase tracking-wider">Current Savings</p>
+          <h2 className="text-4xl font-bold text-[#004700]">${total.toFixed(2)}</h2>
         </div>
         <p className="text-sm font-medium text-gray-400">{percentage.toFixed(0)}% to Goal</p>
       </div>
@@ -28,8 +28,11 @@ export default async function Home() {
       {/* Progress Bar */}
       <div className="w-full bg-gray-100 rounded-full h-4 overflow-hidden">
         <div 
-          className="bg-green-500 h-full transition-all duration-1000 ease-out"
-          style={{ width: `${percentage}%` }}
+          className="h-full transition-all duration-1000 ease-out bg-[#004700]"
+          style={{ width: `${percentage}%`,
+            backgroundColor: "#004700",
+            minWidth: percentage > 0 ? "2px" : "0"
+           }}
         />
       </div>
     </div>
