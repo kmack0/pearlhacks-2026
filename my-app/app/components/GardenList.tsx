@@ -32,7 +32,8 @@ export default function GardenList() {
   if (loading) return <p>Loading your gardens...</p>;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* For every fund in your database, React creates a new FundCard */}
       {funds.map((fund) => (
         <FundCard 
           key={fund.id} 
@@ -40,6 +41,6 @@ export default function GardenList() {
           onContributionSuccess={fetchFunds} 
         />
       ))}
-    </div>
-  );
+  </div>
+);
 }
