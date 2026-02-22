@@ -4,7 +4,7 @@ export default async function Home() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const response = await fetch(`${baseUrl}/api/funds`);
   const funds = await response.json();
-  const goalAmount = funds[0].goalAmount;
+  const totalGoalAmount = funds.reduce((sum: number, fund: any) => sum + fund.goalAmount, 0);
 
   let total = 0;
   try {
@@ -14,8 +14,8 @@ export default async function Home() {
   } catch (err) {
     console.error("Failed to fetch total", err);
   }
-  const savingsGoal = 1000; // Example goal amount
-  const percentage = Math.min((total / savingsGoal) * 100, 100);
+
+  const percentage = Math.min((total / totalGoalAmount) * 100, 100);
   return (
     <main className="page-container">
       <h1>Welcome to My Website</h1>
@@ -25,7 +25,7 @@ export default async function Home() {
       <div className="flex justify-between items-end mb-2">
         <div>
           <p className="text-sm text-[#303234] uppercase tracking-wider">Current Savings</p>
-          <h2 className="text-4xl font-bold text-[#004700]">${total.toFixed(2)}</h2>
+          <h2 className="text-4xl font-bold text-[#004700]">${total.toFixed(2)} / ${totalGoalAmount.toFixed(2)}</h2>
         </div>
         <p className="text-sm font-medium text-gray-400">{percentage.toFixed(0)}% to Goal</p>
       </div>
